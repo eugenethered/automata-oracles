@@ -9,7 +9,7 @@ class PredictionResolver:
     def __init__(self, oracles):
         self.oracles: List[Oracle] = oracles
 
-    def resolve(self, instrument, data):
+    def resolve(self, instrument, data) -> Prediction:
         self.set_all_oracle_with_data(data)
         predictions = self.collect_predictions_from_all_oracles(instrument)
         best_prediction = self.determine_best_profitable_prediction(predictions)
