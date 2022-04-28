@@ -1,4 +1,4 @@
-from oracle.Prediction import Prediction
+from core.oracle.Prediction import Prediction
 
 
 class Oracle:

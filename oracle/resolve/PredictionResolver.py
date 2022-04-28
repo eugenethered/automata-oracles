@@ -1,7 +1,8 @@
 from typing import List
 
+from core.oracle.Prediction import Prediction
+
 from oracle.Oracle import Oracle
-from oracle.Prediction import Prediction
 
 
 class PredictionResolver:
