@@ -7,5 +7,5 @@ class Oracle:
     def set_exchange_rates(self, exchange_rates: ExchangeRateHolder):
         pass
 
-    def predict(self, instrument) -> Prediction:
+    def predict(self, instrument, instant) -> Prediction:
         pass

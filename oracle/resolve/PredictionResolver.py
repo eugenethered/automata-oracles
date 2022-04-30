@@ -11,9 +11,9 @@ class PredictionResolver:
     def __init__(self, oracles):
         self.oracles: List[Oracle] = oracles
 
-    def resolve(self, instrument, exchange_rates) -> Prediction:
+    def resolve(self, instrument, exchange_rates, instant) -> Prediction:
         self.set_all_oracle_with_exchange_rates(exchange_rates)
-        predictions = self.collect_predictions_from_all_oracles(instrument)
+        predictions = self.collect_predictions_from_all_oracles(instrument, instant)
         best_prediction = self.determine_best_profitable_prediction(predictions)
         return best_prediction
 
@@ -21,10 +21,10 @@ class PredictionResolver:
         for oracle in self.oracles:
             oracle.set_exchange_rates(exchange_rates)
 
-    def collect_predictions_from_all_oracles(self, instrument) -> List[Prediction]:
+    def collect_predictions_from_all_oracles(self, instrument, instant) -> List[Prediction]:
         predictions = []
         for oracle in self.oracles:
-            prediction = oracle.predict(instrument)
+            prediction = oracle.predict(instrument, instant)
             predictions.append(prediction)
         valid_predictions = [p for p in predictions if p is not None]
         return valid_predictions
