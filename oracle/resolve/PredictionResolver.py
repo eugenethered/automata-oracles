@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from core.oracle.Prediction import Prediction
 from exchange.rate.ExchangeRateHolder import ExchangeRateHolder
@@ -11,7 +11,7 @@ class PredictionResolver:
     def __init__(self, oracles):
         self.oracles: List[Oracle] = oracles
 
-    def resolve(self, instrument, exchange_rates, instant) -> Prediction:
+    def resolve(self, instrument, exchange_rates, instant) -> Optional[Prediction]:
         self.set_all_oracle_with_exchange_rates(exchange_rates)
         predictions = self.collect_predictions_from_all_oracles(instrument, instant)
         best_prediction = self.determine_best_profitable_prediction(predictions)
