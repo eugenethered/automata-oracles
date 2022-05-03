@@ -15,8 +15,10 @@ class PredictionResolver:
     def resolve(self, instrument, exchange_rates, exchanged_from, instant) -> Optional[Prediction]:
         self.set_all_oracle_with_exchange_rates(exchange_rates)
         predictions = self.collect_predictions_from_oracles(instrument, exchanged_from, instant)
-        self.reset_oracles()
-        return self.determine_best_prediction(predictions)
+        best_prediction = self.determine_best_prediction(predictions)
+        if best_prediction is not None:
+            self.reset_oracles()
+            return best_prediction
 
     def set_all_oracle_with_exchange_rates(self, exchange_rates: ExchangeRateHolder):
         for oracle in self.oracles:
