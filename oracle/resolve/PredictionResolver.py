@@ -11,7 +11,7 @@ class PredictionResolver:
     def __init__(self, oracles):
         self.oracles: List[Oracle] = oracles
 
-    def resolve(self, instrument, exchange_rates, exchanged_from=None, instant=None) -> Optional[Prediction]:
+    def resolve(self, instrument, exchange_rates, exchanged_from, instant) -> Optional[Prediction]:
         self.set_all_oracle_with_exchange_rates(exchange_rates)
         predictions = self.collect_predictions_from_all_oracles(instrument, exchanged_from, instant)
         best_prediction = self.determine_best_profitable_prediction(predictions)
