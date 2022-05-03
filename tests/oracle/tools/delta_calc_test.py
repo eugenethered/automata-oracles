@@ -46,6 +46,5 @@ class DeltaCalcTestCase(unittest.TestCase):
         self.assertIsNone(delta_prediction)
 
 
-
 if __name__ == '__main__':
     unittest.main()

@@ -14,15 +14,15 @@ class PredictionResolver:
 
     def resolve(self, instrument, exchange_rates, exchanged_from, instant) -> Optional[Prediction]:
         self.set_all_oracle_with_exchange_rates(exchange_rates)
-        predictions = self.collect_predictions_from_all_oracles(instrument, exchanged_from, instant)
-        best_prediction = self.determine_best_profitable_prediction(predictions)
-        return best_prediction
+        predictions = self.collect_predictions_from_oracles(instrument, exchanged_from, instant)
+        self.reset_oracles()
+        return self.determine_best_prediction(predictions)
 
     def set_all_oracle_with_exchange_rates(self, exchange_rates: ExchangeRateHolder):
         for oracle in self.oracles:
             oracle.set_exchange_rates(exchange_rates)
 
-    def collect_predictions_from_all_oracles(self, instrument, exchanged_from, instant) -> List[Prediction]:
+    def collect_predictions_from_oracles(self, instrument, exchanged_from, instant) -> List[Prediction]:
         predictions = []
         for oracle in self.oracles:
             prediction = oracle.predict(instrument, exchanged_from, instant)
@@ -30,7 +30,7 @@ class PredictionResolver:
         valid_predictions = [p for p in predictions if p is not None]
         return valid_predictions
 
-    def determine_best_profitable_prediction(self, predictions: List[Prediction]):
+    def determine_best_prediction(self, predictions: List[Prediction]):
         if not predictions:
             return None
         sorted_predictions = sorted(predictions, key=lambda prediction: prediction.percent, reverse=True)
@@ -42,10 +42,9 @@ class PredictionResolver:
             return best_prediction
         forced_predictions = [p for p in predictions if p.forced is True]
         if len(forced_predictions) > 0:
-            self.reset_all_oracles()
             return forced_predictions[0]
 
-    def reset_all_oracles(self):
+    def reset_oracles(self):
         for oracle in self.oracles:
             oracle.reset()
 
