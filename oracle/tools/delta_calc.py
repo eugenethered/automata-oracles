@@ -14,4 +14,4 @@ def calc_delta_prediction(instant_rate: InstantRate, other_instant_rate: Instant
     if instant_rate is not None and other_instant_rate is not None:
         delta = calc_delta(instant_rate, other_instant_rate)
         (instrument, to_instrument) = instrument_exchange
-        return Prediction(outcome=[instrument, to_instrument], profit=delta)
+        return Prediction(outcome=[instrument, to_instrument], percent=delta)

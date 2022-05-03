@@ -8,6 +8,6 @@ class Oracle:
 
     def set_exchange_rates(self, exchange_rates: ExchangeRateHolder):
         pass
-
+    
     def predict(self, instrument, exchanged_from, instant) -> Optional[Prediction]:
         pass

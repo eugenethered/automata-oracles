@@ -27,7 +27,7 @@ class DeltaCalcTestCase(unittest.TestCase):
         instrument_exchange = InstrumentExchange('OTC', 'GBP')
         delta_prediction = calc_delta_prediction(rate, other_rate, instrument_exchange)
         self.assertEqual(delta_prediction.outcome, ['OTC', 'GBP'])
-        self.assertEqual(delta_prediction.profit, BigFloat('50.00'))
+        self.assertEqual(delta_prediction.percent, BigFloat('50.00'))
 
     def test_should_compute_negative_delta_prediction(self):
         rate = InstantRate(2, BigFloat('100.00'))
@@ -35,7 +35,7 @@ class DeltaCalcTestCase(unittest.TestCase):
         instrument_exchange = InstrumentExchange('OTC', 'GBP')
         delta_prediction = calc_delta_prediction(rate, other_rate, instrument_exchange)
         self.assertEqual(delta_prediction.outcome, ['OTC', 'GBP'])
-        self.assertEqual(delta_prediction.profit, BigFloat('-50.00'))
+        self.assertEqual(delta_prediction.percent, BigFloat('-50.00'))
 
     def test_should_not_compute_delta_prediction_when_either_instant_rate_is_none(self):
         rate = InstantRate(2, BigFloat('100.00'))

@@ -8,8 +8,9 @@ from oracle.Oracle import Oracle
 
 class PredictionResolver:
 
-    def __init__(self, oracles):
+    def __init__(self, oracles, threshold):
         self.oracles: List[Oracle] = oracles
+        self.threshold = threshold
 
     def resolve(self, instrument, exchange_rates, exchanged_from, instant) -> Optional[Prediction]:
         self.set_all_oracle_with_exchange_rates(exchange_rates)
@@ -29,9 +30,16 @@ class PredictionResolver:
         valid_predictions = [p for p in predictions if p is not None]
         return valid_predictions
 
-    @staticmethod
-    def determine_best_profitable_prediction(predictions: List[Prediction]):
+    def determine_best_profitable_prediction(self, predictions: List[Prediction]):
         if not predictions:
             return None
-        sorted_predictions = sorted(predictions, key=lambda prediction: prediction.profit)
-        return sorted_predictions[0]
+        sorted_predictions = sorted(predictions, key=lambda prediction: prediction.percent, reverse=True)
+        return self.designate_appropriate_prediction(sorted_predictions)
+
+    def designate_appropriate_prediction(self, predictions: List[Prediction]):
+        best_prediction = predictions[0]
+        if best_prediction.percent > self.threshold:
+            return best_prediction
+        forced_predictions = [p for p in predictions if p.forced is True]
+        if len(forced_predictions) > 0:
+            return forced_predictions[0]
