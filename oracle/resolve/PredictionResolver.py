@@ -42,4 +42,10 @@ class PredictionResolver:
             return best_prediction
         forced_predictions = [p for p in predictions if p.forced is True]
         if len(forced_predictions) > 0:
+            self.reset_all_oracles()
             return forced_predictions[0]
+
+    def reset_all_oracles(self):
+        for oracle in self.oracles:
+            oracle.reset()
+
