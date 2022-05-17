@@ -2,8 +2,8 @@ from typing import Optional
 
 from core.exchange.InstrumentExchange import InstrumentExchange
 from core.oracle.Prediction import Prediction
+from coreutility.number.BigFloatSubtract import BigFloatSubtract
 from exchange.rate.InstantRate import InstantRate
-from utility.number.BigFloatSubtract import BigFloatSubtract
 
 
 def calc_delta(instant_rate: InstantRate, other_instant_rate: InstantRate):
