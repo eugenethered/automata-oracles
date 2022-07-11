@@ -38,6 +38,9 @@ class PredictionResolver:
         return self.designate_appropriate_prediction(sorted_predictions)
 
     def designate_appropriate_prediction(self, predictions: List[Prediction]):
+        # todo: if predictions are below (need to coerce to trade)
+        # todo: threshold is one mechanism
+        # todo: hook provider to trader to influence "coercion"
         forced_prediction = self.obtain_best_forced_prediction(predictions)
         return forced_prediction if forced_prediction is not None else self.obtain_best_prediction(predictions)
 
